@@ -22,6 +22,7 @@ import React, {useState} from "react";
 import { Button, Form, FormGroup, Label, Input, Row} from 'reactstrap';
 import Swal from 'sweetalert2'
 import {useHistory} from 'react-router'
+import { format } from 'date-fns';
 function NucleoIcons(props) {
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -53,9 +54,10 @@ function NucleoIcons(props) {
         'error'
       )
     } else {
+      let status = parseInt(jam.replace(':',''), 9) > parseInt(format(new Date(), 'kkmm'), 9) ? "Terlambat" : "Tepat Waktu"
       axios({
         method: 'GET',
-        url: `${process.env.REACT_APP_URL}absencePostApi/${props.match.params.code}/${code}/${kelas}/${jam}/${materi}`
+        url: `${process.env.REACT_APP_URL}absencePostApi/${props.match.params.code}/${code}/${kelas}/${jam}/${materi}/${status}`
       }).then(()=> {
         Swal.fire({
           title: 'Success',
@@ -93,18 +95,18 @@ function NucleoIcons(props) {
         <Label for="exampleSelect">Jam Ke</Label>
         <Input value={jam} onChange={(e) => setJam(e.target.value)} type="select" name="select" id="exampleSelect">
           <option>Pilih jam</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
-          <option>8</option>
-          <option>9</option>
-          <option>10</option>
-          <option>11</option>
-          <option>12</option>
+          <option value="07:10">1</option>
+          <option value="07:55">2</option>
+          <option value="08:40">3</option>
+          <option value="09:25">4</option>
+          <option value="10:25">5</option>
+          <option value="11:10">6</option>
+          <option value="12:25">7</option>
+          <option value="13:15">8</option>
+          <option value="13:55">9</option>
+          <option value="14:40">10</option>
+          <option value="15:25">11</option>
+          <option value="16:10">12</option>
         </Input>
       </FormGroup>
       <FormGroup>
